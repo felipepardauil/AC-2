@@ -1,38 +1,36 @@
-/*LISTA DUPLAMENTE ENCADEADA*/
-
 #include <iostream>
 using namespace std;
 
-template <typename T>
+template <class T>
 struct No{
     T info;
-    No <T> *eloA = NULL;
-    No <T> *eloP = NULL;
+    No <T> *eloA = nullptr;
+    No <T> *eloP = nullptr;
 };
 
-template <typename T>
+template <class T>
 struct LDE{
-    No <T> *comeco = NULL;
-    No <T> *fim = NULL;
+    No <T> *comeco = nullptr;
+    No <T> *fim = nullptr;
 };
 
 // Opera��es da LDE
-template <typename T>
+template <class T>
 void inicializarLDE( LDE <T> &lista ){
-    lista.comeco = NULL;
-    lista.fim = NULL;
+    lista.comeco = nullptr;
+    lista.fim = nullptr;
 }
 
-template <typename T>
+template <class T>
 bool inserirFinalLDE( LDE <T> &lista, T valor ){
     No <T> *novo = new No <T>;
 
-    if( novo == NULL ) return false;
+    if( novo == nullptr ) return false;
     novo->info = valor;
-    novo->eloA = NULL;
-    novo->eloP = NULL;
+    novo->eloA = nullptr;
+    novo->eloP = nullptr;
 
-    if( lista.comeco == NULL ){ // Caso 1 - lista vazia
+    if( lista.comeco == nullptr ){ // Caso 1 - lista vazia
         lista.comeco = novo;
         lista.fim = novo;
     }
@@ -44,16 +42,16 @@ bool inserirFinalLDE( LDE <T> &lista, T valor ){
     return true;
 }
 
-template <typename T>
+template <class T>
 bool inserirLDE(LDE <T> &lista, T valor){
     No <T> *novo = new No <T>;
 
-    if( novo == NULL ) return false;
+    if( novo == nullptr ) return false;
     novo->info = valor;
-    novo->eloA = NULL;
-    novo->eloP = NULL;
+    novo->eloA = nullptr;
+    novo->eloP = nullptr;
 
-    if( lista.comeco == NULL ){ // Caso A
+    if( lista.comeco == nullptr ){ // Caso A
         lista.comeco = novo;
         lista.fim = novo;
     }
@@ -69,7 +67,7 @@ bool inserirLDE(LDE <T> &lista, T valor){
     }
     else{ // Caso D
         No <T> *aux = lista.comeco;
-        while( aux != NULL ){
+        while( aux != nullptr ){
             No <T> *prox = aux->eloP;
             if( aux->info <= valor && valor < prox->info ){
                 aux->eloP = novo;
@@ -84,31 +82,31 @@ bool inserirLDE(LDE <T> &lista, T valor){
     return true;
 }
 
-template <typename T>
+template <class T>
 bool retirarLDE( LDE <T> &lista, T valor ){
-    if( lista.comeco == NULL ) return false;
+    if( lista.comeco == nullptr ) return false;
     No <T> *aux, *ant, *prox;
 
     if( valor == lista.comeco->info ){
         aux = lista.comeco;
         if( valor == lista.fim->info ){ // Caso a
-            lista.comeco = NULL;
-            lista.fim = NULL;
+            lista.comeco = nullptr;
+            lista.fim = nullptr;
         }
         else{ // Caso b
             lista.comeco = aux->eloP;
-            lista.comeco->eloA = NULL;
+            lista.comeco->eloA = nullptr;
         }
     }
     else{
         if( valor == lista.fim->info ){ // Caso c
             aux = lista.fim;
             lista.fim = aux->eloA;
-            lista.fim->eloP = NULL;
+            lista.fim->eloP = nullptr;
         }
         else{ // Caso d
             aux = lista.comeco;
-            while( aux != NULL ){
+            while( aux != nullptr ){
                 if( aux->info == valor ){
                     ant = aux->eloA;
                     prox = aux->eloP;
@@ -118,7 +116,7 @@ bool retirarLDE( LDE <T> &lista, T valor ){
                 }
                 aux = aux->eloP;
             }
-            if( aux == NULL ) return false;
+            if( aux == nullptr ) return false;
         }
     }
 
@@ -126,45 +124,42 @@ bool retirarLDE( LDE <T> &lista, T valor ){
     return true;
 }
 
-template <typename T>
+template <class T>
 void mostrarLDE(LDE <T> lista, char ordem){
     if( ordem == 'C' || ordem == 'c' ){
         No <T> *aux = lista.comeco;
-        while( aux != NULL ){
+        while( aux != nullptr ){
             cout << aux->info << " ";
             aux = aux->eloP; // Avan�a para o pr�ximo no
         }
     } else {
         No <T> *aux = lista.fim;
-        while( aux != NULL ){
+        while( aux != nullptr ){
             cout << aux->info << " ";
             aux = aux->eloA; // Avan�a para o no anterior
         }
     }
 }
 
-template <typename T>
+template <class T>
 void liberarLDE(LDE <T> &lista){
     No <T> *temp, *aux = lista.comeco;
-    while( aux != NULL ){
+    while( aux != nullptr ){
         temp = aux;
         aux = aux->eloP;
         delete temp;
     }
-    lista.comeco = lista.fim = NULL;
+    lista.comeco = lista.fim = nullptr;
 }
 
 // Retornar true se o valor for encontrado ou false se n�o estiver na lista
 // **********
-template <typename T>
+template <class T>
 bool pesquisarLDE(LDE <T> lista, T valor){
     No <T> *aux = lista.comeco;
-    while( aux != NULL ){
+    while( aux != nullptr ){
         if( aux->info == valor ) return true;
         aux = aux->eloP;
     }
     return false;
 }
-
-
-
